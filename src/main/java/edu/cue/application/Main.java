@@ -10,22 +10,7 @@ public class Main { // Encapsulando el main en una clase
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ClienteImpl clienteService = new ClienteImpl() {
-            @Override
-            public List<Cliente> consultarClientes() {
-                return null;
-            }
-
-            @Override
-            public void insertarCliente(String ID, String nombre, String direccion, String telefono) throws Exception {
-
-            }
-
-            @Override
-            public Cliente actualizarCliente(String ID, String nombre, String direccion, int telefono) throws Exception {
-                return null;
-            }
-        };
+        ClienteImpl clienteService = new ClienteImpl();
 
         while (true) {
             System.out.println("\n--- Menú de Gestión de Clientes ---");
@@ -42,10 +27,11 @@ public class Main { // Encapsulando el main en una clase
             switch (option) {
                 case 1:
                     List<Cliente> clientes = clienteService.consultarClientes();
+                    assert clientes != null;
                     if (clientes.isEmpty()) {
                         System.out.println("No hay clientes registrados.");
                     } else {
-                        clientes.forEach(cliente -> System.out.println(cliente));
+                        clientes.forEach(cliente -> System.out.println(cliente.ID+" "+cliente.getNombre()+" "+cliente.getDireccion()+" "+cliente.getTelefono()));
                     }
                     break;
                 case 2:

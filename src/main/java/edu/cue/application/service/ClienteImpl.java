@@ -6,7 +6,7 @@ import edu.cue.infraestructure.repository.ClienteRepositoryImpl;
 
 import java.util.List;
 
-public abstract class ClienteImpl implements ClienteServicio {
+public class ClienteImpl implements ClienteServicio {
     private final ClienteRepository clienteRepository = new ClienteRepositoryImpl(); // Uso de la interfaz
 
     @Override
@@ -19,7 +19,12 @@ public abstract class ClienteImpl implements ClienteServicio {
     }
 
     @Override
-    public void insertarCliente(String ID, String nombre, String direccion, int telefono) throws Exception {
+    public List<Cliente> consultarClientes() {
+        return clienteRepository.findAll();
+    }
+
+    @Override
+    public void insertarCliente(String ID, String nombre, String direccion, String telefono) throws Exception {
         if (ID.isBlank()) {
             throw new Exception("El ID está vacío");
         }
@@ -36,7 +41,7 @@ public abstract class ClienteImpl implements ClienteServicio {
             throw new Exception("Por favor ingresa una dirección");
         }
 
-        Cliente cliente = new Cliente(ID, nombre, direccion, telefono);
+        Cliente cliente = new Cliente(ID, nombre, direccion, Integer.parseInt(telefono));
         clienteRepository.save(cliente);
     }
 
@@ -47,6 +52,11 @@ public abstract class ClienteImpl implements ClienteServicio {
         }
 
         clienteRepository.delete(ID);
+    }
+
+    @Override
+    public Cliente actualizarCliente(String ID, String nombre, String direccion, int telefono) throws Exception {
+        return null;
     }
 
     @Override
